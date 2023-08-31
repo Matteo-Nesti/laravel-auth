@@ -27,9 +27,12 @@
 
         @include('includes.navbar')
 
-        <main class="">
+
+
+        <main class="container">
             @yield('content')
         </main>
+
     </div>
 
     @yield('script')

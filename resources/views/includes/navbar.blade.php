@@ -21,7 +21,7 @@
                 </li>
                 @Auth
                     <li class="nav-item">
-                        <a class="nav-link @if (request()->routeIs('admin.projects.index')) active @endif"
+                        <a class="nav-link @if (request()->routeIs('admin.projects.*')) active @endif"
                             href="{{ route('admin.projects.index') }}">Projects</a>
                     </li>
                 @endauth
