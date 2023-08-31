@@ -28,16 +28,20 @@
                     <th scope="row">{{ $project->id }}</th>
                     <td>{{ $project->title }}</td>
                     <td>{{ $project->created_at }}</td>
-                    <td>
+                    <td class="d-flex">
                         <a href="{{ route('admin.projects.show', $project) }}" class="btn btn-primary">
                             <i class="fa-solid fa-eye"></i>
                         </a>
-                        <a href="" class="btn btn-warning">
+                        <a href="" class="btn btn-warning mx-1">
                             <i class="fa-solid fa-pencil"></i>
                         </a>
-                        <a href="" class="btn btn-danger">
-                            <i class="fa-solid fa-trash"></i>
-                        </a>
+                        <form action="{{ route('admin.projects.destroy', $project) }}" method="POST" class="delete-form">
+                            @csrf
+                            @method('DELETE')
+                            <button class="btn btn-danger">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                        </form>
                     </td>
                 </tr>
 
@@ -51,6 +55,8 @@
     </table>
     <a href="{{ route('admin.home') }}" class="btn btn-secondary">Back</a>
 
+@endsection
 
-
+@section('script')
+    @vite('resources/js/delete-confirm.js')
 @endsection
