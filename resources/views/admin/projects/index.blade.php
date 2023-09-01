@@ -10,8 +10,10 @@
 @section('content')
 
     <h1 class="text-center">Projects</h1>
+    <hr>
 
-
+    <a href="{{ route('admin.projects.create') }}" class="btn btn-primary mb-3"> <i class="fa-solid fa-plus"></i> Add New
+        Project </a>
 
     <table class="table table-dark table-striped ">
         <thead>
