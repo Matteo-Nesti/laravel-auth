@@ -5,14 +5,15 @@
 @section('content')
     <form class="mt-3 row" method="POST" action="{{ route('admin.projects.store') }}">
         @csrf
-        @method('POST')
+
         <div class="mb-3 col-6">
             <label for="title" class="form-label">Create New Title</label>
             <input type="text" class="form-control" id="title" aria-describedby="emailHelp" name="title">
         </div>
         <div class="mb-3 col-6">
             <label for="slug" class="form-label">Slug Title</label>
-            <input type="text" class="form-control" id="slug" aria-describedby="emailHelp" disabled name="slug">
+            <input type="text" class="form-control" id="slug" aria-describedby="emailHelp" name="slug"
+                value="" readonly>
         </div>
         {{-- img prev --}}
         <div class="mb-3 col-10">
@@ -46,7 +47,7 @@
         title.addEventListener('input', () => {
 
             if (title) {
-                slug.value = title.value.trim().toLowerCase().replace(' ', '-')
+                slug.value = title.value.trim().replace(/\s+/g, '-').toLowerCase()
             }
 
         })

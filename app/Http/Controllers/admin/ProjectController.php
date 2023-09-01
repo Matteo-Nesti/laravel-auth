@@ -33,7 +33,14 @@ class ProjectController extends Controller
     {
         $data = $request->all();
         $project = new Project();
-        $project->fill($data);
+
+        $project->title = $data['title'];
+        $project->content = $data['content'];
+        $project->image = $data['image'];
+        $project->slug = $data['slug'];
+
+        //$project->fill($data);
+
         $project->save();
         return redirect()->route('admin.projects.show', $project);
     }
