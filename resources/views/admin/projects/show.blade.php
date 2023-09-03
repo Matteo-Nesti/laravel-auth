@@ -8,6 +8,7 @@
         <div class="col">
             <h1 class="text-center">{{ $project->title }}</h1>
             <p>{{ $project->content }}</p>
+            <p>{{ $project->slug }}</p>
         </div>
     </div>
 

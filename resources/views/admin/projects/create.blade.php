@@ -8,7 +8,8 @@
 
         <div class="mb-3 col-6">
             <label for="title" class="form-label">Create New Title</label>
-            <input type="text" class="form-control" id="title" aria-describedby="emailHelp" name="title">
+            <input type="text" class="form-control @error('title') is-invalid @enderror" id="title"
+                aria-describedby="emailHelp" name="title">
         </div>
         <div class="mb-3 col-6">
             <label for="slug" class="form-label">Slug Title</label>

@@ -5,7 +5,9 @@ namespace App\Http\Controllers\admin;
 use App\Models\Project;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Str;
 
+use Illuminate\Validation\Rule;
 
 class ProjectController extends Controller
 {
@@ -31,10 +33,26 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'title' => 'required|max:50|string|unique:projects',
+            'content' => 'required|string',
+            'image' => 'url:http,https|nullable',
+        ], [
+            'title.required' => 'Title is required',
+            'title.max' => 'Title max length is 50',
+            'title.unique' => 'the title already exists',
+
+            'content.required' => 'Description is required',
+
+            'image.url' => 'Url is not valid',
+        ]);
         $data = $request->all();
-        $project = new Project();;
+
+        $project = new Project();
 
         $project->fill($data);
+
+        $project->slug = Str::slug($project->title, '-');
 
         $project->save();
         return redirect()->route('admin.projects.show', $project);
@@ -61,8 +79,21 @@ class ProjectController extends Controller
      */
     public function update(Request $request, Project $project)
     {
-        $data = $request->all();
+        $request->validate([
+            'title' => ['required', 'max:50', 'string', Rule::unique('projects')->ignore($project)],
+            'content' => 'required|string',
+            'image' => 'url:http,https|nullable',
+        ], [
+            'title.required' => 'Title is required',
+            'title.max' => 'Title max length is 50',
+            'title.unique' => 'the title already exists',
 
+            'content.required' => 'Description is required',
+
+            'image.url' => 'Url is not valid',
+        ]);
+
+        $data = $request->all();
 
         $project->update($data);
 
