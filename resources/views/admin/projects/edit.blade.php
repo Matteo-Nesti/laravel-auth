@@ -10,17 +10,5 @@
 
 @section('script')
     @vite('resources/js/thumb-preview.js')
-
-    <script>
-        const title = document.getElementById('title')
-        const slug = document.getElementById('slug')
-
-        title.addEventListener('input', () => {
-
-            if (title) {
-                slug.value = title.value.trim().replace(/\s+/g, '-').toLowerCase()
-            }
-
-        })
-    </script>
+    @vite('resources/js/slug-live.js')
 @endsection
