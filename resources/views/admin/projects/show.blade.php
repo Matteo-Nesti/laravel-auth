@@ -3,7 +3,9 @@
 @section('content')
     <div class="row mt-3">
         <div class="col-3">
-            <img src="{{ $project->image }}" alt=" {{ $project->title }} " class="img-fluid">
+            @if ($project->image)
+                <img src="{{ asset('storage/' . $project->image) }}" alt=" {{ $project->title }} " class="img-fluid">
+            @endif
         </div>
         <div class="col">
             <h1 class="text-center">{{ $project->title }}</h1>

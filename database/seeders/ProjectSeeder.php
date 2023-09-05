@@ -9,10 +9,9 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
 
 class ProjectSeeder extends Seeder
+
+
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(Generator $faker): void
     {
         for ($i = 1; $i <= 5; $i++) {

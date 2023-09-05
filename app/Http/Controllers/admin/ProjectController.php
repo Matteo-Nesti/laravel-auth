@@ -5,6 +5,8 @@ namespace App\Http\Controllers\admin;
 use App\Models\Project;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 use Illuminate\Validation\Rule;
@@ -37,7 +39,7 @@ class ProjectController extends Controller
         $request->validate([
             'title' => 'required|max:50|string|unique:projects',
             'content' => 'required|string',
-            'image' => 'url:http,https|nullable',
+            'image' => 'nullable',
         ], [
             'title.required' => 'Title is required',
             'title.max' => 'Title max length is 50',
@@ -50,7 +52,13 @@ class ProjectController extends Controller
         $data = $request->all();
 
         $project = new Project();
-
+        //controllo se arriva un campo
+        if (Arr::exists($data, 'image')) {
+            //trasmormare cio che arriva in un percorso
+            $img_path = Storage::put('image', $data['image']);
+            //riassegnare
+            $data['image'] = $img_path;
+        }
         $project->fill($data);
 
         $project->slug = Str::slug($project->title, '-');
@@ -83,21 +91,22 @@ class ProjectController extends Controller
         $request->validate([
             'title' => ['required', 'max:50', 'string', Rule::unique('projects')->ignore($project->id)],
             'content' => 'required|string',
-            'image' => 'url:http,https|nullable',
+            'image' => 'nullable',
         ], [
             'title.required' => 'Title is required',
             'title.max' => 'Title max length is 50',
             'title.unique' => 'the title already exists',
 
             'content.required' => 'Description is required',
-
-            'image.url' => 'Url is not valid',
         ]);
 
         $data = $request->all();
-
+        if (Arr::exists($data, 'image')) {
+            if ($project->image) Storage::delete($project->image);
+            $img_path = Storage::put('image', $data['image']);
+            $data['image'] = $img_path;
+        }
         $project->update($data);
-
         return redirect()->route('admin.projects.show', $project->id);
     }
 
@@ -106,6 +115,7 @@ class ProjectController extends Controller
      */
     public function destroy(Project $project)
     {
+        if ($project->image) Storage::delete($project->image);
         $project->delete();
         return redirect()->route('admin.projects.index');
     }

@@ -30,20 +30,23 @@
                     <th scope="row">{{ $project->id }}</th>
                     <td>{{ $project->title }}</td>
                     <td>{{ $project->created_at }}</td>
-                    <td class="d-flex">
-                        <a href="{{ route('admin.projects.show', $project) }}" class="btn btn-primary">
-                            <i class="fa-solid fa-eye"></i>
-                        </a>
-                        <a href="{{ route('admin.projects.edit', $project) }}" class="btn btn-warning mx-1">
-                            <i class="fa-solid fa-pencil"></i>
-                        </a>
-                        <form action="{{ route('admin.projects.destroy', $project) }}" method="POST" class="delete-form">
-                            @csrf
-                            @method('DELETE')
-                            <button class="btn btn-danger">
-                                <i class="fa-solid fa-trash"></i>
-                            </button>
-                        </form>
+                    <td>
+                        <div class="d-flex">
+                            <a href="{{ route('admin.projects.show', $project) }}" class="btn btn-primary">
+                                <i class="fa-solid fa-eye"></i>
+                            </a>
+                            <a href="{{ route('admin.projects.edit', $project) }}" class="btn btn-warning mx-1">
+                                <i class="fa-solid fa-pencil"></i>
+                            </a>
+                            <form action="{{ route('admin.projects.destroy', $project) }}" method="POST"
+                                class="delete-form">
+                                @csrf
+                                @method('DELETE')
+                                <button class="btn btn-danger">
+                                    <i class="fa-solid fa-trash"></i>
+                                </button>
+                            </form>
+                        </div>
                     </td>
                 </tr>
 
